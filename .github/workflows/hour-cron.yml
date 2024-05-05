@@ -17,10 +17,11 @@ jobs:
           echo installed cURL
         
       - name: Install Okta CLI
-        run: |
-          npm install -g @okta/okta-cli
-          echo installed okta cli
-          
+        run: npm install -g @okta/okta-cli
+
+      - name: Installed Okta CLI
+        run: echo installed okta cli
+
       - name: Send Request with Okta Token
         run: |
           RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $PAGE_URL)

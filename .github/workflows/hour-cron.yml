@@ -23,9 +23,9 @@ jobs:
         
       - name: Install Okta CLI
         run: |
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak install flathub com.okta.developer.CLI
-          alias okta="flatpak run com.okta.developer.CLI"
+          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          sudo flatpak install flathub com.okta.developer.CLI
+          sudo alias okta="flatpak run com.okta.developer.CLI"
           echo installed okta cli
         #   curl https://raw.githubusercontent.com/okta/okta-cli/master/cli/src/main/scripts/install.sh | bash
         #   npm config set registry http://registry.npmjs.org

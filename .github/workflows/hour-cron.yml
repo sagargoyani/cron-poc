@@ -11,23 +11,20 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Install flatpak
+         run: |
+          sudo apt install flatpak
+          echo installed flatpak
+
       - name: Install cURL
         run: |
           sudo apt-get update && sudo apt-get install -y curl
           echo installed cURL
-          
-      - name: Install flatpak
-        run: |
-          sudo apt-get install flatpak
-          echo installed flatpak
         
       - name: Install Okta CLI
         run: |
-          sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          sudo flatpak install flathub com.okta.developer.CLI
-          sudo alias okta="flatpak run com.okta.developer.CLI"
+          curl https://raw.githubusercontent.com/okta/okta-cli/master/cli/src/main/scripts/install.sh | bash
           echo installed okta cli
-        #   curl https://raw.githubusercontent.com/okta/okta-cli/master/cli/src/main/scripts/install.sh | bash
         #   npm config set registry http://registry.npmjs.org
         #   npm install -g @okta/okta-cli
           

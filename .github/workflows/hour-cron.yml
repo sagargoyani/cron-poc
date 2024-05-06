@@ -29,3 +29,5 @@ jobs:
           else
             echo "Google Page is DOWN"
           fi
+        env:
+          PAGE_URL: "https://www.google.com/"

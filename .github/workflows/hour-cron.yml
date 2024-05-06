@@ -11,15 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Install flatpak
-         run: |
-          sudo apt install flatpak
-          echo installed flatpak
-
       - name: Install cURL
         run: |
           sudo apt-get update && sudo apt-get install -y curl
           echo installed cURL
+          
+      - name: Install flatpak
+        run: |
+          sudo apt-get install flatpak
+          echo installed flatpak
         
       - name: Install Okta CLI
         run: |

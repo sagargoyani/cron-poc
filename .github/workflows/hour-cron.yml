@@ -18,7 +18,7 @@ jobs:
         
       - name: Install Okta CLI
         run: |
-          sudo curl https://raw.githubusercontent.com/okta/okta-cli/master/cli/src/main/scripts/install.sh | bash
+          sudo curl https://raw.githubusercontent.com/okta/okta-cli/master/cli/src/main/scripts/install.sh
           echo installed okta cli
           
       - name: Send Request with Okta Token

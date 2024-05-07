@@ -33,9 +33,6 @@ jobs:
 
       - name: Open Web Page and Verify Content
         id: verify-page
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12'
         run: |
           const puppeteer = require('puppeteer-core');
           const browser = await puppeteer.launch();

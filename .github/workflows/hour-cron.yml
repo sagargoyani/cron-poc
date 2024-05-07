@@ -9,32 +9,26 @@ on:
 jobs:
   verify-content:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          
-      - name: Make POST Request to API
-        id: api-call
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Call POST API
         run: |
-          const http = require('@actions/http-client');
-          const response = await http.post('http://your-api-url.com', JSON.stringify({ /* Your request body */ }));
-          console.log(response.statusCode);
-          console.log(response.result);
-      
-    #   - name: Wait for 1 Minute
-    #     run: |
-    #       sleep 60  # Wait for 1 minute
+          curl -X GET https://www.google.com
+        # Replace the URL and payload with your actual POST API endpoint and payload
 
       - name: Open Web Page and Verify Content
-        id: verify-page
-        run: |
-          const puppeteer = require('puppeteer-core');
-          const browser = await puppeteer.launch();
-          const page = await browser.newPage();
-          await page.goto('https://www.google.com');
-          const content = await page.content();
-          console.log(content.includes('test Expected Content'));
+        uses: dramforever/puppeteer-action@v1
+        with:
+          args: |
+            async () => {
+              const browser = await puppeteer.launch();
+              const page = await browser.newPage();
+              await page.goto('http://example.com'); // Replace with your page URL
+              await new Promise(resolve => setTimeout(resolve, 60000)); // Wait for 1 minute
+              const content = await page.content();
+              console.log(content.includes('Expected Content')); // Verify expected content
+              await browser.close();
+            }

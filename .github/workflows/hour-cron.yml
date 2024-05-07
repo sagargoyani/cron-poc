@@ -1,4 +1,4 @@
-name: Check Page Availability
+name: Check OTC Page Availability
 
 on:
   schedule:
@@ -7,27 +7,37 @@ on:
     branches: [ "main" ]
 
 jobs:
-  check-page:
+  verify-content:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Install cURL
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Make POST Request to API
+        id: api-call
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
         run: |
-          sudo apt-get update && sudo apt-get install -y curl
-          echo installed cURL
-        
-      - name: Install Okta CLI
+          const http = require('@actions/http-client');
+          const response = await http.post('http://your-api-url.com', JSON.stringify({ /* Your request body */ }));
+          console.log(response.statusCode);
+          console.log(response.result);
+      
+    #   - name: Wait for 1 Minute
+    #     run: |
+    #       sleep 60  # Wait for 1 minute
+
+      - name: Open Web Page and Verify Content
+        id: verify-page
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
         run: |
-          sudo curl https://raw.githubusercontent.com/okta/okta-cli/master/cli/src/main/scripts/install.sh
-          echo installed okta cli
-          
-      - name: Send Request with Okta Token
-        run: |
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $PAGE_URL)
-          if [ $RESPONSE -eq 200 ]; then
-            echo "Google Page is UP"
-          else
-            echo "Google Page is DOWN"
-          fi
-        env:
-          PAGE_URL: "https://www.google.com/"
+          const puppeteer = require('puppeteer-core');
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+          await page.goto('https://www.google.com');
+          const content = await page.content();
+          console.log(content.includes('test Expected Content'));

@@ -14,11 +14,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Make POST Request to API
-        id: api-call
+      - name: using node
         uses: actions/setup-node@v2
         with:
           node-version: '12'
+          
+      - name: Make POST Request to API
+        id: api-call
         run: |
           const http = require('@actions/http-client');
           const response = await http.post('http://your-api-url.com', JSON.stringify({ /* Your request body */ }));
